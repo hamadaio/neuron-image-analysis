@@ -1,0 +1,18 @@
+function outdata = smoothdata( indata, binsize )
+%UNTITLED2 Summary of this function goes here
+%   Detailed explanation goes here
+
+onesX = ones(binsize, 1);
+
+for idx_series = 1:numel(indata);
+    s = indata(idx_series);
+    for idx_channel = 1:s.nChannels
+        s.y(:,idx_channel) = conv(s.y(:,idx_channel), onesX);
+    end
+    outdata(idx_series) = s;
+end
+
+
+
+end
+
