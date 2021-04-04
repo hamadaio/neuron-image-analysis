@@ -1,0 +1,40 @@
+function outdata = averageeData( indata )
+%UNTITLED2 Summary of this function goes here
+%   Detailed explanation goes here
+
+outdata.name = 'average';
+
+if max(indata.signalLengths) > min(indata.signalLengths)
+    error('All signals must be of equal length to be able to do average')
+else
+    signalLength = indata.signalLengths(1);
+end
+
+
+nChannels = min(indata.nChannels);
+if nChannels < max(indata.nChannels)
+    warning(['will not use more than %d channels though some '...
+        'series have up to %d channels'], nChannels, max(nChannelList))
+end
+
+fnames = fieldnames(indata);
+for idx_fname = 1:num
+
+outdata.x = indata(1).x;
+outdata.y = zeros(signalLength, nChannels);
+outdata.nChannels = nChannels;
+
+yt = zeros(signalLength, nChannels);
+
+for idx_channel = 1:nChannels
+    for idx_series = 1:indata.nSeries
+        
+        yt(:, idx_series) = indata(idx_series).y(:,idx_channel);
+        outdata.y(:,idx_channel) = mean(yt, 2);
+    end
+end
+
+
+
+end
+
